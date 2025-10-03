@@ -6,6 +6,7 @@
     <meta name="description" content="Portfolio de WebCraft Solutions - Agence de développement web et mobile">
     <title>WebCraft Solutions - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Axios pour les requêtes AJAX -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="/css/styles.css">
 
@@ -47,24 +48,28 @@
         </div>
     </section>
 
-    <!-- Portfolio -->
+    <!-- Section Portfolio -->
     <section class="py-16" id="portfolio">
         <div class="container mx-auto px-6">
             <h2 class="text-4xl font-bold text-center mb-12">Nos Projets</h2>
 
+            <!-- Loader affiché pendant le chargement AJAX -->
             <div id="loader" class="text-center py-12" style="display: none;">
                 <div class="loader-spinner"></div>
                 <p class="mt-4 text-gray-600">Chargement des projets...</p>
             </div>
 
+            <!-- Message d'erreur si la requête AJAX échoue -->
             <div id="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6" style="display: none;" role="alert">
                 <p id="error-message"></p>
             </div>
 
+            <!-- Filtres générés dynamiquement via JS -->
             <div id="filters" class="mb-8 flex flex-wrap gap-3 justify-center" role="group" aria-label="Filtres par technologie">
                 <button class="filter-btn active" data-tech="all" aria-pressed="true">Tous</button>
             </div>
 
+            <!-- Grille responsive pour les projets (Grid CSS) -->
             <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             </div>
 

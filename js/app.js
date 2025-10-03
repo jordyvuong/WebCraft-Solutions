@@ -1,16 +1,18 @@
 const API_URL = 'https://gabistam.github.io/Demo_API/data/projects.json';
 
+// Variables globales pour stocker les données
 let allProjects = [];
 let allTechnologies = [];
 let currentFilter = 'all';
 
-// Fonction pour charger les projets depuis l'API
+// Chargement des projets via AJAX (Axios)
 async function loadProjects() {
     const loader = document.getElementById('loader');
     const errorDiv = document.getElementById('error');
     const errorMessage = document.getElementById('error-message');
 
     try {
+        // Afficher le loader pendant la requête
         loader.style.display = 'block';
         errorDiv.style.display = 'none';
 
@@ -25,6 +27,7 @@ async function loadProjects() {
         createFilters();
 
     } catch (error) {
+        // Gestion d'erreur avec try/catch
         console.error('Erreur:', error);
         errorMessage.textContent = 'Impossible de charger les projets. Veuillez réessayer.';
         errorDiv.style.display = 'block';
@@ -33,11 +36,12 @@ async function loadProjects() {
     }
 }
 
-// Boutons de filtrage
+// Création dynamique des boutons de filtre
 function createFilters() {
     const filtersContainer = document.getElementById('filters');
     const allButton = filtersContainer.querySelector('[data-tech="all"]');
 
+    // Manipulation du DOM : création d'éléments
     allTechnologies.forEach(function(tech) {
         const button = document.createElement('button');
         button.className = 'filter-btn';
@@ -54,12 +58,12 @@ function createFilters() {
     });
 }
 
-// Filtrer les projets 
+// Filtrage dynamique des projets
 function filterProjects(technology) {
     currentFilter = technology;
     const filtersContainer = document.getElementById('filters');
 
-    // mettre à jour les boutons actifs
+    // Mise à jour visuelle des boutons actifs
     const buttons = filtersContainer.querySelectorAll('.filter-btn');
     buttons.forEach(btn => btn.classList.remove('active'));
 
@@ -68,6 +72,7 @@ function filterProjects(technology) {
         activeBtn.classList.add('active');
     }
 
+    // Filtrage avec ES6+ (arrow function)
     let filtered;
     if (technology === 'all') {
         filtered = allProjects;
@@ -78,7 +83,7 @@ function filterProjects(technology) {
     displayProjects(filtered);
 }
 
-// Afficher les projets
+// Affichage des projets dans le DOM
 function displayProjects(projects) {
     const projectsGrid = document.getElementById('projects-grid');
     const noResults = document.getElementById('no-results');
@@ -100,7 +105,7 @@ function displayProjects(projects) {
     });
 }
 
-// Créer une carte pour un projet
+// Création d'une carte projet
 function createCard(project) {
     const card = document.createElement('div');
     card.className = 'project-card';
@@ -118,9 +123,9 @@ function createCard(project) {
 
     const client = document.createElement('p');
     client.className = 'project-card-client';
-    client.textContent = `Client: ${project.client}`;
+    client.textContent = `Client: ${project.client}`; 
 
-    // Technologies
+    // Création des badges de technologies
     const techContainer = document.createElement('div');
     techContainer.className = 'flex flex-wrap mt-2';
     for (let i = 0; i < project.technologies.length; i++) {
@@ -133,6 +138,7 @@ function createCard(project) {
     const button = document.createElement('button');
     button.className = 'project-card-btn';
     button.textContent = 'Voir détails';
+    // Événement click pour ouvrir le modal
     button.addEventListener('click', function() {
         showModal(project);
     });
@@ -148,22 +154,23 @@ function createCard(project) {
     return card;
 }
 
-// Afficher le modal avec les détails
+// Ouverture du modal avec les détails du projet
 function showModal(project) {
     const modal = document.getElementById('project-modal');
     const modalBody = document.getElementById('modal-body');
 
+    // Construction de HTML avec template literals
     let techBadges = '';
     project.technologies.forEach(function(tech) {
         techBadges += `<span class="tech-badge">${tech}</span>`;
     });
-
 
     let featuresList = '';
     project.features.forEach(function(feature) {
         featuresList += `<li>${feature}</li>`;
     });
 
+    // Mise à jour du DOM avec innerHTML
     modalBody.innerHTML = `
         <img src="${project.image}" alt="${project.title}" class="w-full h-72 object-cover rounded-lg mb-6">
         <h2 class="text-3xl font-bold text-gray-800 mb-4">${project.title}</h2>
@@ -211,6 +218,7 @@ function closeModal() {
     document.body.style.overflow = 'auto';
 }
 
+// Événements au chargement du DOM
 document.addEventListener('DOMContentLoaded', function() {
     const modal = document.getElementById('project-modal');
 
@@ -220,13 +228,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const overlay = modal.querySelector('.modal-overlay');
     overlay.addEventListener('click', closeModal);
 
+    // Fermeture au clavier (touche Escape)
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape' && modal.style.display === 'flex') {
             closeModal();
         }
     });
 
-    // Menu mobile
+    // Menu mobile toggle
     const mobileMenuBtn = document.getElementById('mobile-menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
 

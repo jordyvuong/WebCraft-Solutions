@@ -1,4 +1,4 @@
-// Menu mobile
+// Menu mobile toggle
 const mobileMenuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 
@@ -14,21 +14,23 @@ if (mobileMenuBtn) {
     });
 }
 
-// Validation formulaire
+// Validation de formulaire JavaScript
 const form = document.getElementById('contact-form');
 const nameInput = document.getElementById('name');
 const emailInput = document.getElementById('email');
 const messageInput = document.getElementById('message');
 const successMsg = document.getElementById('success-message');
 
+// Événement submit avec validation
 form.addEventListener('submit', function(e) {
-    e.preventDefault();
+    e.preventDefault(); 
     console.log('Formulaire soumis');
 
     clearErrors();
 
     let isValid = true;
 
+    // Validation du nom
     if (nameInput.value.trim() === '') {
         showError('name', 'Le nom est obligatoire');
         isValid = false;
@@ -37,6 +39,7 @@ form.addEventListener('submit', function(e) {
         isValid = false;
     }
 
+    // Validation de l'email
     if (emailInput.value.trim() === '') {
         showError('email', 'L\'email est obligatoire');
         isValid = false;
@@ -45,6 +48,7 @@ form.addEventListener('submit', function(e) {
         isValid = false;
     }
 
+    // Validation du message
     if (messageInput.value.trim() === '') {
         showError('message', 'Le message est obligatoire');
         isValid = false;
@@ -70,6 +74,7 @@ form.addEventListener('submit', function(e) {
     }
 });
 
+// Affichage des erreurs de validation
 function showError(field, message) {
     const errorElement = document.getElementById(field + '-error');
     const inputElement = document.getElementById(field);
@@ -91,6 +96,7 @@ function clearErrors() {
     });
 }
 
+// Validation d'email avec regex
 function isValidEmail(email) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
